@@ -1,0 +1,141 @@
+########################################################################
+##
+## CS 101 Lab
+## Program 4
+## Willem Battey
+## wlbwx8@umsystem.edu
+##
+## PROBLEM : Create a slot machine. Where their user decides their starting bank and how much they want to bet
+## 
+##
+## ALGORITHM : 
+##      1. create all the given functions in the instructions
+##      2. make a loop of a variable play so that while it is true the loop will continue 
+##      3. Assign all the initial values to their own variables
+##      4. Loop that will end once their bank is equal to zero
+##      5. print the results of the spins and check if there are any matches by making if statement to see if they're equal
+##      6. Tell the user how much they won or loss while adding that amount to the total bank (if they lost the value will be negative)
+##      7. create a variable of the heighest payout they get. will be used later
+##      8. ask if they want to play again
+##      9. if the asnwer is no print out the heighest pay and how long it took them to lose all of their money
+## ERROR HANDLING:
+##      Any Special Error handling to be noted.  Wager not less than 0. play_again() kept looping until fixed
+##
+## OTHER COMMENTS:
+##
+########################################################################
+
+
+
+import random
+import math
+
+
+def play_again():
+    '''Asks the user to play again. If Y, YES return true. If N, NO return false'''
+    user_input = input("Do you want to play again? ==> ")
+    if user_input in ('Y', 'YES'):
+        return True
+    elif user_input in ('N', 'NO'):
+        return False
+    while user_input not in ('YES', 'Y') and user_input not in ('N', 'NO'):
+        print("You must enter Y/YES/N/NO. Plese try again")
+        user_input = input("Do you want to play again? ==> ")
+        if user_input in ('Y', 'YES'):
+            return True
+        elif user_input in ('N', 'NO'):
+            return False
+
+
+def get_bank():
+    '''Ask the user how many chips they want to start with between 1-100.'''
+    user_bank = int(input("How many chips do you want to start with "))
+    if user_bank >= 0 and user_bank < 101:
+        return user_bank
+    if user_bank <= 0:
+        print("Too low a value, you can only choose 1 - 100 chips")
+        while user_bank <= 0:
+            user_bank = int(input("How many chips do you want to start with "))
+    if user_bank > 100:
+        print("Too high a value, you can only choose 1 - 100 chips")
+        while user_bank > 100:
+            user_bank = int(input("How many chips do you want to start with "))
+    return user_bank
+
+
+def get_wager(bank : int):
+    '''Ask the user how many of the chips they want to wager on that one spin'''
+    user_chips = int(input("How many chips do you want to wager "))
+    while user_chips <= 0:
+        print("Wager must be more than 0. Please enter again")
+        user_chips = int(input("How many chips do you want to wager "))
+    while user_chips > bank:
+        print("Cannot be more than bank amount")
+        user_chips = int(input("how many chips do you want to wager "))
+    if 0 < user_chips <= bank:
+        return user_chips
+
+
+def get_slot_results():
+    '''Print out the slot results for that one spin'''
+    slot1 = random.randint(1, 10)
+    slot2 = random.randint(1, 10)
+    slot3 = random.randint(1, 10)
+    return (slot1, slot2, slot3)
+
+
+def get_matches(slot1, slot2, slot3):
+    '''Check the spin for any matches and return the according value'''
+    if slot1 == slot2 and slot2 == slot3 and slot1 == slot3:
+        return 3
+    if slot1 == slot2 or slot2 == slot3 or slot1 == slot3:
+        return 2
+    else:
+        return 0
+
+
+def get_payout(wager, matches):
+    '''Return a variable with the payout created according to the returned value of get_matches'''
+    if get_matches(result1, result2, result3) == 3:
+        payout = (wager * 10) - wager
+        return payout
+    if get_matches(result1, result2, result3) == 2:
+        payout = (wager * 3) - wager
+        return payout
+    if get_matches(result1, result2, result3) == 0:
+        payout =  -wager
+        return payout
+
+
+
+if __name__ == "__main__":
+    play = True
+    while play == True:
+        highest_pay = 0
+        rounds = 0
+        bank = get_bank()
+        org_bank = bank
+        while bank > 0:
+            wager = get_wager(bank)            
+            (result1, result2, result3) = get_slot_results()
+            print("Your spin:", result1, result2, result3)
+            if get_matches(result1, result2, result3) == 3:
+                    print("You matched 3 reels")
+            if get_matches(result1, result2, result3) == 2:
+                    print("You matched 2 reels")
+            if get_matches(result1, result2, result3) == 0:
+                    print("You matched 0 reels")
+
+            payout = get_payout(wager, get_matches(result1, result2, result3))
+            print("You won/lost:", get_payout(wager, get_matches(result1, result2, result3)))
+            bank = (bank + (payout))
+            print("Your current bank:", (bank))       
+            if bank > highest_pay:
+                highest_pay = bank
+            rounds += 1
+        play = play_again()
+             
+    print("The most amount of chips you had was", highest_pay)
+    print("You lost all", org_bank, "chips in", rounds, "spins")
+
+
