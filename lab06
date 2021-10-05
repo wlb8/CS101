@@ -1,1 +1,80 @@
 
+import string
+def get_school(lib_card):
+    if int(lib_card[5]) == 1:
+        school = "School of Computing and Engineering SCE"
+        return school
+    elif int(lib_card[5]) == 2:
+        school = "School of law"
+        return school
+    elif int(lib_card[5]) == 3:
+        school = "College of Arts and Sciences"
+        return school
+    else:
+        invalid = "Invalid school"
+        return invalid
+
+def get_grade(lib_card):
+    for x in lib_card[6]:
+        if x == 1:
+            grade = "Freshman"
+            return grade
+        elif x == 2:
+            grade = "Sophomore"
+            return grade
+        elif x == 3:
+            grade = "Junior"
+            return grade
+        elif x == 4:
+            grade = "Senior"
+            return grade
+        else:
+            grade = "Invalid grade"
+    pass
+
+
+def character_value(ch):
+    char_value = string.ascii_uppercase.index(ch)
+    return char_value
+
+
+def get_check_digit(lib_card):
+        total = 0
+        for x in lib_card[: 4]:
+                one4 = (lib_card.index(x) + 1) * character_value(x)
+                total += one4
+        for x in lib_card[5:9]:
+                five9 = int(lib_card.index(x) + 1) * character_value(x)
+                total += five9
+        check = total % 10
+        return check
+
+
+
+
+def verify_check_digit(lib_card):
+    if len(lib_card) != 10:
+        return False, "The length of the number given must be 10"
+    for x in lib_card[: 5]:
+        if x == x.isalpha():
+            return None
+        else:
+            return False, ("The first 5 characters must be A-Z, the invalid character is at", lib_card.index(x), "is", x)
+    for x in lib_card[7:9]:
+        if 0 <= x <= 9:
+            return False, ("The last 3 characters must be 0-9, the invalid character is at", lib_card.index(x), "is", x)
+    if lib_card[5] not in (1, 2) or lib_card[5] not in (3):
+        return False, ("The sixth character must be 1 2 or 3")
+    if lib_card[6] not in (1, 2) or lib_card[6] not in (3, 4):
+        return False, ("The seventh character must be 1 2 3 or 4")
+    if lib_card[9] != get_check_digit(lib_card):
+        che = get_check_digit(lib_card)
+        return False, ("Check Digit", lib_card[9], "does not match calculated value", che)
+    elif lib_card == lib_card:
+        return True, ''
+
+
+
+if __name__ == "__main__":
+    lib_card = input("Enter Library Card. Hit Enter to Exit ==> ")
+    print(get_school(lib_card))
