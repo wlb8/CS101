@@ -60,17 +60,17 @@ def verify_check_digit(lib_card):
         return False, "The length of the number given must be 10"
     for x in lib_card[0:4]:
         if x.isalpha() != True:
-            return False, ("The first 5 characters must be A-Z, the invalid character is at", lib_card.index(x), "is", x)
+            return False, print("The first 5 characters must be A-Z, the invalid character is at", lib_card.index(x), "is", x)
     for x in lib_card[7:9]:
         if int(x) < 0 and int(x) > 9:
-            return False, ("The last 3 characters must be 0-9, the invalid character is at", lib_card.index(x), "is", x)
+            return False, print("The last 3 characters must be 0-9, the invalid character is at", lib_card.index(x), "is", x)
     if lib_card[5] not in ('1', '2') and lib_card[5] not in ('3'):
-        return False, ("The sixth character must be 1 2 or 3")
+        return False, print("The sixth character must be 1 2 or 3")
     if lib_card[6] not in ('1', '2') and lib_card[6] not in ('3', '4'):
-        return False, ("The seventh character must be 1 2 3 or 4")
+        return False, print("The seventh character must be 1 2 3 or 4")
     if int(lib_card[9]) != get_check_digit(lib_card):
         che = get_check_digit(lib_card)
-        return False, ("Check Digit", lib_card[9], "does not match calculated value", che)
+        return False, print("Check Digit", lib_card[9], "does not match calculated value", che)
     elif lib_card == lib_card:
         return True, ''
 
@@ -79,9 +79,12 @@ def verify_check_digit(lib_card):
 if __name__ == "__main__":
     lib_card = input("Enter Library Card. Hit Enter to Exit ==> ")
     while lib_card != '': 
+        bol, say = verify_check_digit(lib_card)
         get_check_digit(lib_card)
-        print(verify_check_digit(lib_card))
-        if verify_check_digit(lib_card) == True:
-            print(get_school(lib_card))
-            print(get_grade(lib_card))
+        if bol == True and say == '':
+            print("Library Card is Valid")
+            print("This card belongs to a student in", get_school(lib_card))
+            print("This card belongs to a ", get_grade(lib_card))
+        else:
+            print(say)
         lib_card = input("Enter Library Card. Hit Enter to Exit ==> ")
