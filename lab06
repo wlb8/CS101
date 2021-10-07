@@ -1,3 +1,22 @@
+'''
+CS 101 Lab
+Program #6
+Willem Battey
+wlbqx8@umsystem.edu
+
+Algorithm: 1. create all the functions given in the prompt
+2. for get_school have it so it checks the 6 character to make sure it is 1-3 do this using if statements
+3. get_grade same as get_school but check for 1-4 and print out the grade things
+4. character_value make it so when it's called it will get the value of the character in question 
+5. get_check_digit use the equation to calculate the check digit
+6. verify_check_digit go through the library card and make sure it meets all the requirements. use if statements
+7. set up a loop so long as the user doesn't input nothing ('') it will keep running
+8. make it so when verify_check_digit returns True it prints out the wanted text to the user
+9. prompt the user for an input again
+'''
+
+
+
 import string
 def get_school(lib_card):
     if int(lib_card[5]) == 1:
@@ -57,7 +76,7 @@ def get_check_digit(lib_card):
 
 def verify_check_digit(lib_card):
     if len(lib_card) != 10:
-        return False, "The length of the number given must be 10"
+        return False, print("The length of the number given must be 10")
     for x in lib_card[0:4]:
         if x.isalpha() != True:
             return False, print("The first 5 characters must be A-Z, the invalid character is at", lib_card.index(x), "is", x)
@@ -79,12 +98,10 @@ def verify_check_digit(lib_card):
 if __name__ == "__main__":
     lib_card = input("Enter Library Card. Hit Enter to Exit ==> ")
     while lib_card != '': 
-        bol, say = verify_check_digit(lib_card)
         get_check_digit(lib_card)
+        bol, say = verify_check_digit(lib_card)
         if bol == True and say == '':
             print("Library Card is Valid")
             print("This card belongs to a student in", get_school(lib_card))
             print("This card belongs to a ", get_grade(lib_card))
-        else:
-            print(say)
         lib_card = input("Enter Library Card. Hit Enter to Exit ==> ")
