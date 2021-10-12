@@ -1,0 +1,24 @@
+import string
+
+def Encrypt(encypt, encrypt_int) -> str:
+    '''Caesar-encrypts string using specified key.'''
+    pass
+
+def Decrypt(string_text, int_key) -> str:
+    ''' Decrypts Caesar-encrypted string with specified key. '''
+    pass
+
+
+def Get_input()->str:
+    '''Interacts with user. Returns one of: '1', '2', '3', '4'.'''
+    pass
+
+
+def Print_menu():
+  '''Prints menu. No user interaction. '''
+  pass
+
+def main():
+    encrypt = input("Enter a text you would like to encrypt")
+    encrypt_int = input("Enter the number to shift the letters by")
+    pass
