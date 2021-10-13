@@ -1,11 +1,28 @@
+
+   
 import string
 
-def Encrypt(encypt, encrypt_int) -> str:
+def Encrypt(encrypt, encrypt_int):
     '''Caesar-encrypts string using specified key.'''
-    pass
+    new_words = []
+    for ch in encrypt:
+        if ch == ' ':
+            new_words.append(ch)
+            continue
+        ch = ch.lower()
+        chindex = string.ascii_lowercase.index(ch)
+        new_index = chindex + encrypt_int
+        if new_index == 25:
+            new_index = 0
+        new_ch = string.ascii_uppercase[new_index]
+        new_words.append(new_ch)
+        encrypted = ''.join(new_words)
+    return encrypted
 
-def Decrypt(string_text, int_key) -> str:
+
+def Decrypt(string_text, int_key):
     ''' Decrypts Caesar-encrypted string with specified key. '''
+    
     pass
 
 
@@ -22,3 +39,8 @@ def main():
     encrypt = input("Enter a text you would like to encrypt")
     encrypt_int = input("Enter the number to shift the letters by")
     pass
+
+encrypt  = input()
+ins = int(input())
+
+print(Encrypt(encrypt, ins))
