@@ -1,5 +1,19 @@
+# Willem Battey
+# wlbqx8@umsystem.edu
+# CS 101
+# Program 4
+# Problem: With understandin the ascii_lowercase. As well as getting Z to loop back to A
+# Algroithm:
+# Function encrypt will use ascii_lowercase to get the new letters for the encryption
+# Function decrypt will use the same thing as encrypt just subtracting them
+# Function get input will make sure the key is between 1 - 4
+# Function print menu will just do a simple print of the menu given
+# For main just put all of them together. Make a loop so where if the user tries to input
+# not 1, 2 or Q it will keep looping until they enter one of those
+# Make it so Q quits the program while the 1 runs Encrypt function and 2 runs Decrypt function
 
-   
+
+
 import string
 
 def Encrypt(encrypt, encrypt_int):
@@ -12,35 +26,89 @@ def Encrypt(encrypt, encrypt_int):
         ch = ch.lower()
         chindex = string.ascii_lowercase.index(ch)
         new_index = chindex + encrypt_int
-        if new_index == 25:
-            new_index = 0
+        if new_index >= 26:
+            new_index = new_index - 26
         new_ch = string.ascii_uppercase[new_index]
         new_words.append(new_ch)
         encrypted = ''.join(new_words)
     return encrypted
 
 
-def Decrypt(string_text, int_key):
+def Decrypt(decrypt, key):
     ''' Decrypts Caesar-encrypted string with specified key. '''
-    
-    pass
+    new_words = []
+    for ch in decrypt:
+        if ch == ' ':
+            new_words.append(ch)
+            continue
+        ch = ch.lower()
+        chindex = string.ascii_lowercase.index(ch)
+        new_index = chindex - key
+        if new_index >= 26:
+            new_index = new_index - 26
+        new_ch = string.ascii_uppercase[new_index]
+        new_words.append(new_ch)
+        decrypted = ''.join(new_words)
+    return decrypted
 
 
-def Get_input()->str:
+def Get_input():
     '''Interacts with user. Returns one of: '1', '2', '3', '4'.'''
-    pass
+    key = int(input("Please enter the amount you would like to shift by : "))
+    if key in range(0, 5):
+        return key
+    else:
+        while key not in range(0, 5):
+            print("Please choose a shift that is 1 - 4")
+            key = int(input("Please enter the amount you would like to shift by : "))
+            if key in range(0, 5):
+                return key
 
 
 def Print_menu():
   '''Prints menu. No user interaction. '''
-  pass
+  print("MAIN MENU:")
+  print("1) Encode a string")
+  print("2) Decrypt a string")
+  print("Press Q to quit")
+  
 
 def main():
-    encrypt = input("Enter a text you would like to encrypt")
-    encrypt_int = input("Enter the number to shift the letters by")
-    pass
+    Print_menu()
+    menu_choice = input("Enter your selection --> ")
+    if menu_choice == '1':
+        phrase = input("Enter phrase you would like to encrypt ")
+        key = Get_input()
+        encrypted_phrase = Encrypt(phrase, key)
+        print(encrypted_phrase)
 
-encrypt  = input()
-ins = int(input())
+    elif menu_choice == '2':
+        phrase = input("Enter the phrase you would like to decrypt ")
+        key = Get_input()
+        decrypted_phrase = Decrypt(phrase, key)
+        print(decrypted_phrase)
 
-print(Encrypt(encrypt, ins))
+    elif menu_choice == 'Q':
+        exit()
+    else:
+        while menu_choice not in ('1', '2') and ('Q'):
+            print("Please choose an option given")
+            menu_choice = input("Enter your selection --> ")
+        if menu_choice == '1':
+            phrase = input("Enter phrase you would like to encrypt ")
+            key = Get_input()
+            encrypted_phrase = Encrypt(phrase, key)
+            print(encrypted_phrase)
+        elif menu_choice == '2':
+            phrase = input("Enter the phrase you would like to decrypt ")
+            key = Get_input()
+            decrypted_phrase = Decrypt(phrase, key)
+            print(decrypted_phrase)
+        elif menu_choice == 'Q':
+            exit()
+
+
+    
+
+if __name__ == '__main__':
+    main()
