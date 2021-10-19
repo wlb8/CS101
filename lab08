@@ -1,0 +1,40 @@
+import csv
+
+while True:
+    try:
+        min_mpg = float(input("Enter the minimum mpg ==> "))
+        if min_mpg <= 0:
+            print("Minimum mpg must be more than 0")
+            continue
+        if min_mpg >= 100:
+            print("Minimum mpg must be less than 100")
+            continue
+        elif min_mpg == float(min_mpg):
+            break
+
+    except ValueError:
+        print("Please enter a valid mpg")
+
+while True:
+    try:
+        vfile = input("Enter the name of the input vechile file ")
+        if vfile == 'vehicle.txt':
+            rfile = csv.reader(vfile, delimiter='\t')
+            for car in rfile:
+                if int(car[-2]) >= 20:
+                    print(car)
+        if vfile == 'vehicle2.txt':
+            rfile = csv.reader(vfile, delimiter='\t')
+            for car in rfile:
+                if int(car[-2]) >= 20:
+                    print(car)
+    except FileNotFoundError:
+        print("Could not open", vfile)
+    except IOError:
+        print("This is an IO Error", vfile)
+
+
+
+
+
+
