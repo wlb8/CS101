@@ -17,15 +17,19 @@ while True:
 
 while True:
     try:
-        vfile = input("Enter the name of the input vechile file ==>")
+        vfile = input("Enter the name of the input vechile file ==> ")
         if vfile == 'vehicles.txt':
             out_file = input("Enter the file you would like to output to ==> ")
             with open('vehicles.txt', 'r') as csvfile:
                 rfile = csv.reader(csvfile, delimiter='\t')
                 out_put = open(out_file, 'w')
                 for car in rfile:
-                    if int(car[-2]) >= min_mpg:
-                        out_put.write(''.join(car))
+                    if int(car[-3]) >= min_mpg:
+                        out_put.write(car[0])
+                        out_put.write('\t')
+                        out_put.write(car[1])
+                        out_put.write(car[2])
+                        out_put.write(car[-3])
                         out_put.write('\n')
                 out_put.close()
         if vfile == 'vehicles2.txt':
