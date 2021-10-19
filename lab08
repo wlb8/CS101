@@ -17,24 +17,30 @@ while True:
 
 while True:
     try:
-        vfile = input("Enter the name of the input vechile file ")
-        if vfile == 'vehicle.txt':
-            rfile = csv.reader(vfile, delimiter='\t')
-            for car in rfile:
-                if int(car[-2]) >= 20:
-                    print(car)
-        if vfile == 'vehicle2.txt':
-            rfile = csv.reader(vfile, delimiter='\t')
-            for car in rfile:
-                if int(car[-2]) >= 20:
-                    print(car)
+        vfile = input("Enter the name of the input vechile file ==>")
+        if vfile == 'vehicles.txt':
+            out_file = input("Enter the file you would like to output to ==> ")
+            with open('vehicles.txt', 'r') as csvfile:
+                rfile = csv.reader(csvfile, delimiter='\t')
+                out_put = open(out_file, 'w')
+                for car in rfile:
+                    if int(car[-2]) >= min_mpg:
+                        out_put.write(''.join(car))
+                        out_put.write('\n')
+                out_put.close()
+        if vfile == 'vehicles2.txt':
+            out_file = input("Enter the file you would like to output to ==> ")
+            with open('vehicles2.txt', 'r') as csvfile:
+                rfile = csv.reader(csvfile, delimiter='\t')
+                for car in rfile:
+                    if int(car[-2]) >= min_mpg:
+                        print(car)
     except FileNotFoundError:
         print("Could not open", vfile)
     except IOError:
         print("This is an IO Error", vfile)
-
-
-
-
-
-
+    if vfile == 'stop':
+        exit()
+    
+    out_put = open(out_file, 'r')
+    print(out_put.read())
