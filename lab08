@@ -1,3 +1,15 @@
+'''
+Willem Battey
+wlbqx8@umsystem.edu
+Program 7
+Algorithm
+1. Make a while true loop with a except for FilenotFound and IOError
+2. Ask the user for the min mpg they want out of a car, the file they want to search and the file they want to export ot
+3. Open the file they gave, then create a for loop where it compaires the -3 position of each line to the given mpg
+4. Then wrtie the year, make and model of the car to the output file formatting correctly
+'''
+
+
 import csv
 
 while True:
@@ -18,33 +30,30 @@ while True:
 while True:
     try:
         vfile = input("Enter the name of the input vechile file ==> ")
-        if vfile == 'vehicles.txt':
+        with open(vfile, 'r') as csvfile:
             out_file = input("Enter the file you would like to output to ==> ")
-            with open('vehicles.txt', 'r') as csvfile:
-                rfile = csv.reader(csvfile, delimiter='\t')
-                out_put = open(out_file, 'w')
-                for car in rfile:
+            rfile = csv.reader(csvfile, delimiter='\t')
+            out_put = open(out_file, 'w+')
+            for car in rfile:
+                try:
+                    x = car[-3]
+                    if car[-3] == 'combinedmpg':
+                        continue
                     if int(car[-3]) >= min_mpg:
-                        out_put.write(car[0])
-                        out_put.write('\t')
-                        out_put.write(car[1])
-                        out_put.write(car[2])
-                        out_put.write(car[-3])
+                        out_put.write('{:<2} {:<20} {:<40}'.format(car[0],car[1], car[2]))
+                        out_put.write('{:>10}'.format(car[-3]))
                         out_put.write('\n')
-                out_put.close()
-        if vfile == 'vehicles2.txt':
-            out_file = input("Enter the file you would like to output to ==> ")
-            with open('vehicles2.txt', 'r') as csvfile:
-                rfile = csv.reader(csvfile, delimiter='\t')
-                for car in rfile:
-                    if int(car[-2]) >= min_mpg:
-                        print(car)
+                except ValueError:
+                    print("Could not convert value", car[-3], 'for vehicle', car[0], car[1], car[2])
+                    continue
+            out_put.close()
+            break
     except FileNotFoundError:
         print("Could not open", vfile)
+        continue
     except IOError:
         print("This is an IO Error", vfile)
-    if vfile == 'stop':
-        exit()
+        continue
+ 
     
-    out_put = open(out_file, 'r')
-    print(out_put.read())
+ 
