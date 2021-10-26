@@ -1,0 +1,49 @@
+import math
+
+def print_menu():
+    print("{:^30}".format("Grade Menu"))
+    print("1 - Add Test")
+    print("2 - Remove Test")
+    print("3 - Clear Tests")
+    print("4 - Add Assignment")
+    print("5 - Remove Assignment")
+    print("6 - Clear Assignments")
+    print("7 - Quit")
+    pass
+
+
+def calc_test_score():
+    '''60% of the grade. Needs to show n/a when no info is present'''
+    pass
+
+
+def calc_assignment_score():
+    '''40% of the grade. Needs to show n/a when no info is present'''
+    pass
+
+def avg(scores):
+    '''Gets the average of the scores'''
+    total=0
+    for x in scores:
+        total = total + x
+        median = total/(len(scores))
+    return median
+
+def standard(scores):
+    '''Gets the standard deviation of the scores'''
+    total = 0
+    av = avg(scores)
+    for x in scores:
+        valav = (x + av)
+        valav_div_4 = valav / 4
+        std = math.sqrt(valav_div_4)
+    return std
+
+if __name__ == "__main__":
+    test_scores=[]
+    assignmentscores=[]
+    Grades={
+        "Tests":[0, 'n/a', 'n/a', 'n/a', 'n/a'],
+        "Assignemtns":[0, 'n/a', 'n/a', 'n/a', 'n/a']
+
+    }
