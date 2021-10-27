@@ -8,21 +8,25 @@ def print_menu():
     print("4 - Add Assignment")
     print("5 - Remove Assignment")
     print("6 - Clear Assignments")
+    print("D - Display Scores")
     print("7 - Quit")
     pass
 
 
 def calc_test_score():
     '''60% of the grade. Needs to show n/a when no info is present'''
+
     pass
 
 
 def calc_assignment_score():
     '''40% of the grade. Needs to show n/a when no info is present'''
+
     pass
 
 def avg(scores):
     '''Gets the average of the scores'''
+
     total=0
     for x in scores:
         total = total + x
@@ -31,6 +35,7 @@ def avg(scores):
 
 def standard(scores):
     '''Gets the standard deviation of the scores'''
+
     total = 0
     av = avg(scores)
     for x in scores:
@@ -39,11 +44,90 @@ def standard(scores):
         std = math.sqrt(valav_div_4)
     return std
 
+def add_score_test(test_scores):
+    '''Adds score to the list of scores'''
+
+    score = int(input("Enter the new test score: "))
+    test_scores.append(test_scores)
+    return test_scores
+
+def remove_score_test(test_scores):
+    '''Removes score from the list of scores'''
+
+    score = int(input("Enter the score you would like to remove"))
+    if score in test_scores:
+        test_scores.remove(score)
+    else:
+        print("Could not find that score to remove")
+    return test_scores
+
+
+def clear_tests(test_scores):
+    '''Removes all scores in the test list'''
+
+    test_scores.clear()
+    return test_scores
+
+
+def add_assignment(assignmentscores):
+    '''Adds assignemnt score to the list of scores'''
+
+    score = int(input("Enter the assignment score"))
+    assignmentscores.append(score)
+    return assignmentscores
+
+def remove_assignment(assignmentscores):
+    '''Removes assingment score from the list of scores'''
+
+    score = int(input("Enter the score you would like to remove"))
+    assignmentscores.remove(score)
+    return assignmentscores
+
+
+def clear_assignemnts(assignmentscores):
+    '''Removes all assingment scores from the list'''
+
+    assignmentscores.clear()
+    return assignmentscores
+
+
+def display_scores(Grades):
+    '''Display the dictionary where the min, max, average and standard deviation are stored'''
+
+    pass
+
+
+
+    
+
+
 if __name__ == "__main__":
     test_scores=[]
     assignmentscores=[]
+
     Grades={
         "Tests":[0, 'n/a', 'n/a', 'n/a', 'n/a'],
         "Assignemtns":[0, 'n/a', 'n/a', 'n/a', 'n/a']
-
     }
+    
+    print_menu()
+    user_input = input()
+    if user_input == '1':
+        adddedt = add_score_test(test_scores)
+    elif user_input == '2':
+        removedt = remove_score_test(test_scores)
+    elif user_input == '3':
+        clear_tests(test_scores)
+    elif user_input == '4':
+        add_assignment(assignmentscores)
+    elif user_input == '5':
+        remove_assignment(assignmentscores)
+    elif user_input == '6':
+        clear_assignemnts(assignmentscores)
+    elif user_input in ('D', 'd'):
+        print("Tests:", Grades["Tests"])
+        print("Programs:", Grades["Assignemtns"])
+    elif user_input in ('Q', 'q'):
+        exit()
+    
+
