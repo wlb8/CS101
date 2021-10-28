@@ -26,39 +26,42 @@ def calc_assignment_score():
 
 def avg(scores):
     '''Gets the average of the scores'''
-
-    total=0
-    for x in scores:
-        total = total + x
-        median = total/(len(scores))
-    return median
-
+    try:
+        total=0
+        for x in scores:
+            total = total + x
+            median = total/(len(scores))
+        return median
+    except UnboundLocalError:
+        return 'n/a'
 def standard(scores):
     '''Gets the standard deviation of the scores'''
-
-    total = 0
-    av = avg(scores)
-    for x in scores:
-        valav = (x + av)
-        valav_div_4 = valav / 4
-        std = math.sqrt(valav_div_4)
-    return std
-
+    try:
+        total = 0
+        av = avg(scores)
+        for x in scores:
+            valav = (x + av)
+            valav_div_4 = valav / 4
+            std = math.sqrt(valav_div_4)
+        return std
+    except UnboundLocalError:
+        return 'n/a'
 def add_score_test(test_scores):
     '''Adds score to the list of scores'''
-
-    score = int(input("Enter the new test score: "))
-    test_scores.append(test_scores)
-    return test_scores
-
+    try:
+        score = int(input("Enter the new test score: "))
+        test_scores.append(score)
+        return test_scores
+    except ValueError:
+        print("Please enter a integer")
 def remove_score_test(test_scores):
     '''Removes score from the list of scores'''
 
-    score = int(input("Enter the score you would like to remove"))
+    score = int(input("Enter the score you would like to remove: "))   
     if score in test_scores:
         test_scores.remove(score)
     else:
-        print("Could not find that score to remove")
+        print("That score does not exist")
     return test_scores
 
 
@@ -71,18 +74,25 @@ def clear_tests(test_scores):
 
 def add_assignment(assignmentscores):
     '''Adds assignemnt score to the list of scores'''
+    try:
+        score = int(input("Enter the assignment score: "))
+        assignmentscores.append(score)
+        return assignmentscores
+    except ValueError:
+        print("Please enter a valid integer")
 
-    score = int(input("Enter the assignment score"))
-    assignmentscores.append(score)
-    return assignmentscores
 
 def remove_assignment(assignmentscores):
     '''Removes assingment score from the list of scores'''
-
-    score = int(input("Enter the score you would like to remove"))
-    assignmentscores.remove(score)
-    return assignmentscores
-
+    try:
+        score = int(input("Enter the score you would like to remove: "))
+        if score in assignmentscores:
+            assignmentscores.remove(score)
+            return assignmentscores
+        else:
+            print("That score does not exist")
+    except ValueError:
+        print("Please enter a valid integer")
 
 def clear_assignemnts(assignmentscores):
     '''Removes all assingment scores from the list'''
@@ -109,25 +119,59 @@ if __name__ == "__main__":
         "Tests":[0, 'n/a', 'n/a', 'n/a', 'n/a'],
         "Assignemtns":[0, 'n/a', 'n/a', 'n/a', 'n/a']
     }
-    
-    print_menu()
-    user_input = input()
-    if user_input == '1':
-        adddedt = add_score_test(test_scores)
-    elif user_input == '2':
-        removedt = remove_score_test(test_scores)
-    elif user_input == '3':
-        clear_tests(test_scores)
-    elif user_input == '4':
-        add_assignment(assignmentscores)
-    elif user_input == '5':
-        remove_assignment(assignmentscores)
-    elif user_input == '6':
-        clear_assignemnts(assignmentscores)
-    elif user_input in ('D', 'd'):
-        print("Tests:", Grades["Tests"])
-        print("Programs:", Grades["Assignemtns"])
-    elif user_input in ('Q', 'q'):
-        exit()
+    user_input = 'y'
+    while user_input not in ("Q", 'q'):
+        print_menu()
+        user_input = input()
+        if user_input == '1':
+            add_score_test(test_scores)
+        elif user_input == '2':
+            remove_score_test(test_scores)
+        elif user_input == '3':
+            clear_tests(test_scores)
+        elif user_input == '4':
+            add_assignment(assignmentscores)
+        elif user_input == '5':
+            remove_assignment(assignmentscores)
+        elif user_input == '6':
+            clear_assignemnts(assignmentscores)
+        elif user_input in ('D', 'd'):
+            try:
+                max_test = max(test_scores)
+            except ValueError:
+                max_test = 'n/a'
+            try:
+                min_test = min(test_scores)
+            except ValueError:
+                min_test = 'n/a'
+            try:
+                max_assign = max(assignmentscores)
+            except ValueError:
+                max_assign = 'n/a'
+            try:
+                min_assign = min(assignmentscores)
+            except ValueError:
+                min_assign = 'n/a'
+            try:    
+                avg_test_score = avg(test_scores)
+            except ValueError:
+                avg_test_score = 'n/a'
+            try:
+                avg_assign_score = avg(assignmentscores)
+            except ValueError:
+                avg_assign_score = 'n/a'
+            try:
+                std_test = standard(test_scores)
+            except ValueError:
+                std_test = 'n/a'
+            try:
+                std_assign = standard(assignmentscores)
+            except ValueError:
+                std_assign = 'n/a'
+
+            print("{:<15} {:<8} {:<8} {:<8.2f} {:<8.2f}".format("Tests:", min_test, max_test, avg_test_score, std_test))
+            print("{:<15} {:<8} {:<8} {:<8.2f} {:<8.2f}".format("Programs:", min_assign, max_assign, avg_assign_score, std_assign))
+        elif user_input in ('Q', 'q'):
+            exit()
     
 
