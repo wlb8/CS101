@@ -1,3 +1,17 @@
+"""
+Willem Battey
+wlbqx8@umsystem.edu
+lab 9
+Algorithm:
+1. For each action the user can do create a function for it
+2. Make a list to add the scores to respectivley
+3. Make a try and except for all the values where if a valueerror returns then return n/a
+4. Format the output correctly using 15 8
+5. For average just do regular averages
+6. Weighted mulitply the grades by the weight then add them together
+7. Standard deviation use the formula given"""
+
+
 import math
 
 def print_menu():
@@ -10,19 +24,21 @@ def print_menu():
     print("6 - Clear Assignments")
     print("D - Display Scores")
     print("7 - Quit")
-    pass
 
 
-def calc_test_score():
+
+def weighted_avg(tests, assigns):
     '''60% of the grade. Needs to show n/a when no info is present'''
+    test_w = 0
+    assign_w = 0
+    for x in tests:
+        test_w = (x * .6) + test_w
+    for x in assigns:
+        assign_w = (x* .6) + assign_w
+    weighted = (test_w + assign_w)
+    return weighted
 
-    pass
 
-
-def calc_assignment_score():
-    '''40% of the grade. Needs to show n/a when no info is present'''
-
-    pass
 
 def avg(scores):
     '''Gets the average of the scores'''
@@ -49,7 +65,12 @@ def standard(scores):
 def add_score_test(test_scores):
     '''Adds score to the list of scores'''
     try:
-        score = int(input("Enter the new test score: "))
+        score = int(input("Enter the new test score 0 - 100: "))
+        while score < 0 and score > 100:
+            print("Please enter a score between 0 - 100")
+            score = int(input("Enter the new test score 0 - 100"))
+            if score > 0 and score < 100:
+                test_scores.append(score)
         test_scores.append(score)
         return test_scores
     except ValueError:
@@ -75,7 +96,12 @@ def clear_tests(test_scores):
 def add_assignment(assignmentscores):
     '''Adds assignemnt score to the list of scores'''
     try:
-        score = int(input("Enter the assignment score: "))
+        score = int(input("Enter the new assignment score 0 - 100: "))
+        while score < 0 and score > 100:
+            print("Please enter a score between 0 - 100")
+            score = int(input("Enter the new assignemnt score 0 - 100: "))
+            if score > 0 and score < 100:
+                assignmentscores.append(score)
         assignmentscores.append(score)
         return assignmentscores
     except ValueError:
@@ -101,15 +127,6 @@ def clear_assignemnts(assignmentscores):
     return assignmentscores
 
 
-def display_scores(Grades):
-    '''Display the dictionary where the min, max, average and standard deviation are stored'''
-
-    pass
-
-
-
-    
-
 
 if __name__ == "__main__":
     test_scores=[]
@@ -123,18 +140,22 @@ if __name__ == "__main__":
     while user_input not in ("Q", 'q'):
         print_menu()
         user_input = input()
+        if user_input not in ('1', '2') or ('3','4') or ('5', '6') or ('D'):
+            print("Please enter one of the given options")
         if user_input == '1':
             add_score_test(test_scores)
         elif user_input == '2':
             remove_score_test(test_scores)
         elif user_input == '3':
             clear_tests(test_scores)
+            print("All test scores have been cleared")
         elif user_input == '4':
             add_assignment(assignmentscores)
         elif user_input == '5':
             remove_assignment(assignmentscores)
         elif user_input == '6':
             clear_assignemnts(assignmentscores)
+            print("All assignments have been cleared")
         elif user_input in ('D', 'd'):
             try:
                 max_test = max(test_scores)
@@ -169,9 +190,18 @@ if __name__ == "__main__":
             except ValueError:
                 std_assign = 'n/a'
 
-            print("{:<15} {:<8} {:<8} {:<8.2f} {:<8.2f}".format("Tests:", min_test, max_test, avg_test_score, std_test))
-            print("{:<15} {:<8} {:<8} {:<8.2f} {:<8.2f}".format("Programs:", min_assign, max_assign, avg_assign_score, std_assign))
+            print("{:<15} {:<8} {:<8} {:<8} {:<8}".format("Type", "#", "min", "max", "avg", "std"))
+            print("============================================================")
+            try:
+                print("{:<15} {:<8} {:<8} {:<8.2f} {:<8.2f}".format("Tests:", min_test, max_test, avg_test_score, std_test))
+            except ValueError:
+                print("{:<15} {:<8} {:<8} {:<8} {:<8}".format("Tests:", min_test, max_test, avg_test_score, std_test))
+            try:
+                print("{:<15} {:<8} {:<8} {:<8.2f} {:<8.2f}".format("Programs:", min_assign, max_assign, avg_assign_score, std_assign))
+            except ValueError:
+                print("{:<15} {:<8} {:<8} {:<8} {:<8}".format("Programs:", min_assign, max_assign, avg_assign_score, std_assign))
+            print('')
+            print("Your weighted average is: ", weighted_avg(test_scores, assignmentscores))
         elif user_input in ('Q', 'q'):
             exit()
     
-
