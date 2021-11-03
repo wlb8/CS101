@@ -34,30 +34,48 @@ def read_in_file(filename):
     fcsv = csv.reader(f)
     for line in fcsv:
         lines.append(line)
+    f.close
     return lines
 
-def create_reported_date_dic(csvlist):
+def create_reported_date_dic(firstlist):
     crimedate={}
     dates=[]
-    for x in csvlist:
-        dates.append(csvlist[1])
+    for x in range(len(firstlist)):
+        dates.append(firstlist[x][1])
     for date in dates:
-        for crimedates in csvlist:
-            if date == crimedates:
-                crimedate[date]=1
-    for time in crimedate:
-        for x in dates:
-            if time == x:
-                crimedate[time] += 1
-
-def create_reported_month_dic(list):
-    pass
-
+        amount = dates.count(date)
+        zipped = zip([date], [amount])
+        crimedate.update(zipped)
+    del crimedate['Reported_Date']
+    return crimedate
+def create_reported_month_dic(firstlist):
+    crimemonths={}
+    dates=[]
+    months=[]
+    for x in range(len(firstlist)):
+        dates.append(firstlist[x][1])
+    for date in dates:
+        months.append(date[1])
+        amount = months.count(date[1])
+        zipped = zip([date[1]], [amount])
+        crimemonths.update(zipped)
+    del crimemonths['e']
+    return crimemonths
 def create_offense_dic(list):
-    pass
+    crimeamount={}
+    crimes=[]
+    for x in range(len(list)):
+        crimes.append(list[x][7])
+    for crime in crimes:
+        amount = crimes.count(crime)
+        zipped = zip([crime], [amount])
+        crimeamount.update(zipped)
+    del crimeamount['Offense']
+    return crimeamount
 
 def create_offense_by_zip(list):
     pass
 
 if __name__ == '__main__':
     d = read_in_file('CrimeDataSmall.csv')
+    print(create_offense_dic(d))
