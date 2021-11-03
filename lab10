@@ -1,24 +1,25 @@
 import csv
+import os.path
 from typing import Counter
 def month_from_number(number):
     '''12 = December'''
-    if number == '01':
+    if number == '1':
         return "January"
-    elif number == '02':
+    elif number == '2':
         return "February"
-    elif number == '03':
+    elif number == '3':
         return "March"
-    elif number == '04':
+    elif number == '4':
         return "April"
-    elif number == '05':
+    elif number == '5':
         return "May"
-    elif number == '06':
+    elif number == '6':
         return "June"
-    elif number == '07':
+    elif number == '7':
         return "July"
-    elif number == '08':
+    elif number == '8':
         return "August"
-    elif number == '09':
+    elif number == '9':
         return "September"
     elif number == '10':
         return "October"
@@ -29,6 +30,7 @@ def month_from_number(number):
 
 
 def read_in_file(filename):
+    '''Returns a list of each line in the file'''
     lines=[]
     f = open(filename,encoding='utf-8')
     fcsv = csv.reader(f)
@@ -38,6 +40,7 @@ def read_in_file(filename):
     return lines
 
 def create_reported_date_dic(firstlist):
+    '''Makes a dictionary of all the dates in the list and how many crimes were commited that day'''
     crimedate={}
     dates=[]
     for x in range(len(firstlist)):
@@ -49,6 +52,7 @@ def create_reported_date_dic(firstlist):
     del crimedate['Reported_Date']
     return crimedate
 def create_reported_month_dic(firstlist):
+    '''Makes a dictionary where it says how many crimes were commited each month'''
     crimemonths={}
     dates=[]
     months=[]
@@ -57,11 +61,12 @@ def create_reported_month_dic(firstlist):
     for date in dates:
         months.append(date[1])
         amount = months.count(date[1])
-        zipped = zip([date[1]], [amount])
+        month = month_from_number(date[1])
+        zipped = zip([month], [amount])
         crimemonths.update(zipped)
-    del crimemonths['e']
     return crimemonths
 def create_offense_dic(list):
+    '''Makes a dictionary where is shows how many of each type of crime was commited'''
     crimeamount={}
     crimes=[]
     for x in range(len(list)):
@@ -74,8 +79,44 @@ def create_offense_dic(list):
     return crimeamount
 
 def create_offense_by_zip(list):
-    pass
+    '''Shows how many crimes were commited for each zipcode'''
+    offensezip={}
+    zipcodes={}
+    zips=[]
+    for x in range(len(list)):
+        zips.append(list[x][13])
+    for z in zips:
+        amount = zips.count(z)
+        packaged = zip([z], [amount])
+        zipcodes.update(packaged)
+    del zipcodes['Zip Code']
+    for data in list:
+        for z in zips:
+            if z in data:
+                offensezip[data[7]]=z
+    del offensezip['Offense']
+    return offensezip
 
 if __name__ == '__main__':
-    d = read_in_file('CrimeDataSmall.csv')
-    print(create_offense_dic(d))
+    ufile = input("Enter the name of the crime data file ")
+    while os.path.exists(ufile) == False:
+        print("Could not find the file specified.", ufile, "not found")
+        ufile = input("Enter the name of the crime data file ")
+    crimefile = read_in_file(ufile)
+    reported_month = create_reported_month_dic(crimefile)
+    print(reported_month)
+    maxmonth = max(reported_month, key=reported_month.get)
+    max_month_crime = max(reported_month.values())
+    reported_offense = create_offense_dic(crimefile)
+    max_offense = max(reported_offense, key=reported_offense.get)
+    max_reported_offense = max(reported_offense.values())
+    print("The month with the highest number of crimes is", maxmonth, 'with', max_month_crime)
+    print("The offense with the highest number of crimes is", max_offense, 'with', max_reported_offense)
+    
+    
+    searched_offense = input("Enter an offense ")
+
+    zipcodes = create_offense_by_zip(crimefile)
+    search_result = zipcodes.get(searched_offense, "Not a valid offense, please try again")
+    print(zipcodes)
+    print(search_result, zipcodes.values[searched_offense] )
