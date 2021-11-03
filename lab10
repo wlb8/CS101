@@ -91,10 +91,9 @@ def create_offense_by_zip(list):
         zipcodes.update(packaged)
     del zipcodes['Zip Code']
     for data in list:
-        for z in zips:
+        for z in zipcodes:
             if z in data:
-                offensezip[data[7]]=z
-    del offensezip['Offense']
+                offensezip[data[7]] = (z, zipcodes[z])
     return offensezip
 
 if __name__ == '__main__':
@@ -119,4 +118,4 @@ if __name__ == '__main__':
     zipcodes = create_offense_by_zip(crimefile)
     search_result = zipcodes.get(searched_offense, "Not a valid offense, please try again")
     print(zipcodes)
-    print(search_result, zipcodes.values[searched_offense] )
+    print(search_result, zipcodes.values[searched_offense])
