@@ -36,7 +36,7 @@ def read_in_file(filename):
     fcsv = csv.reader(f)
     for line in fcsv:
         lines.append(line)
-    f.close
+    f.close()
     return lines
 
 def create_reported_date_dic(firstlist):
@@ -117,5 +117,14 @@ if __name__ == '__main__':
 
     zipcodes = create_offense_by_zip(crimefile)
     search_result = zipcodes.get(searched_offense, "Not a valid offense, please try again")
-    print(zipcodes)
-    print(search_result, zipcodes.values[searched_offense])
+    while search_result == "Not a valid offense, please try again":
+        print(search_result)
+        searched_offense = input("Enter an offense ")
+        search_result = [zipcodes.get(searched_offense, "Not a valid offense, please try again")]
+        if searched_offense == 'e':
+            exit()
+    print(search_result)
+    print(searched_offense, "Offenses by zip code")
+    print("==============================")
+    for x in search_result:
+        print('{:<9} {:>20}'.format(search_result[0], search_result[1]))
