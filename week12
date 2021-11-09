@@ -1,0 +1,23 @@
+import os.path
+def count_words(file):
+    f = open(file, 'r')
+    word_count = {}
+    count = 0
+    print(f.readlines())
+    for lines in f.readlines():
+        line = lines.split()
+        for word in line:
+        if word1.lower() == word2.lower():
+            count += 1
+            word_count[word1] = count
+    f.close()
+    return word_count
+
+
+if __name__ == '__main__':
+    ufile = input("Please enter the file you would like to have counted")
+    while os.path.exists == False:
+        print("Invalid file")
+        print("Please try again")
+        ufile = input("Please enter the file you would like to have counted")
+    print(count_words(ufile))
