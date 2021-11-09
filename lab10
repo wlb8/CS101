@@ -78,25 +78,22 @@ def create_offense_dic(list):
     del crimeamount['Offense']
     return crimeamount
 
-def create_offense_by_zip(list):
+def create_offense_by_zip(crimelist):
     '''Shows how many crimes were commited for each zipcode'''
     offensezip={}
     zipcodes={}
     zips=[]
-    for x in range(len(list)):
-        zips.append(list[x][13])
-    for z in zips:
-        amount = zips.count(z)
-        packaged = zip([z], [amount])
-        zipcodes.update(packaged)
-    del zipcodes['Zip Code']
-    for data in list:
-        offensezip.setdefault(data[7], {})
-    for data in list:
-        for z in zipcodes:
+    for x in range(len(crimelist)):
+        zips.append(crimelist[x][13])
+    for data in crimelist:
+        for z in zips:
             if z in data:
-                offensezip.append(data[7], (z, zipcodes[z]))
-    return offensezip
+                amount = str(zips.count(z))
+                zipcodes[data[7]] = {}
+                packaged = {z:amount}
+                zipcodes[data[7]].update(packaged)
+    del zipcodes['Offense']
+    return zipcodes
 
 if __name__ == '__main__':
     ufile = input("Enter the name of the crime data file ")
@@ -126,7 +123,13 @@ if __name__ == '__main__':
         if searched_offense == 'e':
             exit()
     print(search_result)
+    k = list(search_result.keys())
+    v = list(search_result.values())
+    searchk = ''.join(k)
+    searchv = ''.join(v)
+    print(searchk)
+    print(searchv)
     print(searched_offense, "Offenses by zip code")
     print("==============================")
     for x in search_result:
-        print('{:<9} {:>20}'.format(search_result[0], search_result[1]))
+        print('{:<9} {:>20}'.format(searchk, searchv))
