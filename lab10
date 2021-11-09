@@ -91,9 +91,11 @@ def create_offense_by_zip(list):
         zipcodes.update(packaged)
     del zipcodes['Zip Code']
     for data in list:
+        offensezip.setdefault(data[7], {})
+    for data in list:
         for z in zipcodes:
             if z in data:
-                offensezip[data[7]] = (z, zipcodes[z])
+                offensezip.append(data[7], (z, zipcodes[z]))
     return offensezip
 
 if __name__ == '__main__':
