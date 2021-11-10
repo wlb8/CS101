@@ -51,16 +51,25 @@ def delete_less3(dic):
 if __name__ == '__main__':
     try:
         ufile = input("Please enter the file you would like to have counted ")
-        ufile = open(ufile, 'r')
-        ufile.close()
+        x = open(ufile, 'r')
+        x.close()
     except:
         while os.path.exists(ufile) == False:
             print("Invalid file")
             print("Please try again")
             ufile = input("Please enter the file you would like to have counted ")
-    counted_words = count_words(ufile)
+    organized = count_words(ufile)
+    print(organized)
+    counted_words = delete_less3(organized)
     print(counted_words)
-    new = delete_less3(counted_words)
-    print(new)
+    print("{:<7} {:^10} {:>10}".format('#', 'Word', 'Amount'))
 
-    
+    count=1
+    total=0
+    for word, amount in counted_words.items():
+        print("{:<7} {:^11} {:>8}".format(count, word, amount))
+        count += 1
+        if amount == 1:
+            total += amount
+    print("There are", (count - 1), "unique words")
+    print("There are", total, "words that appear once in the file")
