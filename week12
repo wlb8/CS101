@@ -1,23 +1,66 @@
 import os.path
 def count_words(file):
+    '''Counts how many times each word appears in a file'''
     f = open(file, 'r')
     word_count = {}
+    full = []
     count = 0
-    print(f.readlines())
     for lines in f.readlines():
         line = lines.split()
-        for word in line:
-        if word1.lower() == word2.lower():
-            count += 1
-            word_count[word1] = count
+        full += line
+    for x in range(len(full)):
+        full[x] = full[x].lower()
+    for word in full:
+        if '.' in word:
+            replaced = word.replace('.', '')
+            full.remove(word)
+            full.append(replaced)
+        elif '!' in word:
+            replaced = word.replace('!', '')
+            full.remove(word)
+            full.append(replaced)
+        elif '?' in word:
+            replaced = word.replace('?', '')
+            full.remove(word)
+            full.append(replaced)
+        elif ',' in word:
+            replaced = word.replace(',', '')
+            full.remove(word)
+            full.append(replaced)
+        elif '--' in word:
+            replaced = word.replace('--', '')
+            full.remove(word)
+            full.append(replaced)
+    for word in full:
+        count = full.count(word)
+        word_count[word] = count
+    print(full)
+
     f.close()
     return word_count
 
 
+def delete_less3(dic):
+    '''Delete words that are shorter than 4 characters. Did this so the first def would not get too long'''
+    dic_copy = {**dic}
+    for word in dic_copy.keys():
+        if len(word) < 3:
+            del dic[word]
+    return dic
+
 if __name__ == '__main__':
-    ufile = input("Please enter the file you would like to have counted")
-    while os.path.exists == False:
-        print("Invalid file")
-        print("Please try again")
-        ufile = input("Please enter the file you would like to have counted")
-    print(count_words(ufile))
+    try:
+        ufile = input("Please enter the file you would like to have counted ")
+        ufile = open(ufile, 'r')
+        ufile.close()
+    except:
+        while os.path.exists(ufile) == False:
+            print("Invalid file")
+            print("Please try again")
+            ufile = input("Please enter the file you would like to have counted ")
+    counted_words = count_words(ufile)
+    print(counted_words)
+    new = delete_less3(counted_words)
+    print(new)
+
+    
