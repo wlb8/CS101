@@ -27,7 +27,7 @@ class House:
 
 
     def __str__(self):
-        return print(self.year, self.price, self.value, self.value)
+        return ("Year Built: {}\n Purchase Price: {}\n Current Value of House: {:.2f}\n Location of House: {}".format(self.year, self.price, self.value, self.location))
 
     def Money_earned(self):
         return (self.value - self.price)
@@ -35,9 +35,18 @@ class House:
 if __name__ == '__main__':
     while True:
         model_year = int(input("Enter the house model year: "))
+        while model_year <= 0:
+            print("Enter a valid year")
+            model_year = int(input("Enter the house model year: "))
+        
         price = float(input("Price of the house: "))
-        current_year = int(input("Enter the current year"))
-        location = input("Enter the location of the house")
+        while price <= 0:
+            print("Enter a valid price")
+            price = float(input("Price of the house: "))
+        
+        current_year = int(input("Enter the current year: "))
+        
+        location = input("Enter the location of the house: ")
 
         age = current_year - model_year
         
@@ -45,10 +54,22 @@ if __name__ == '__main__':
         house = House(age, price, location)
         value = house.current_value()
         house = House(age, price, location, value)
-        earned = house.Money_earned() 
+        earned = house.Money_earned()
+        print("House Information:")
+        print("----------------") 
         print(house)
-        uinput = input("Look up another house? Y N")
-        
+        print("----------------") 
+        print('')
+        print("The total value you will earn")
+        print("{:.2f}".format(earned))
+        uinput = input("Look up another house? Y N: ")
+        if uinput == 'Y':
+            continue
+        elif uinput == 'N':
+            break
+        else:
+            uinput = input()
 
+        
 
 
