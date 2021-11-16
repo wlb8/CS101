@@ -1,0 +1,43 @@
+'''
+Algorithm
+create the wanted functions
+For current value just use the given formula to find the current value
+__str__ is going to take some formating but it should be easy
+Money_earned needs to return the amount of money the user made. To do this just take the current value and subtract the price they bought it for to get the profit
+
+Make a while True loop in the main for all of the things
+Ask for the model year, price, current year and location
+Make a new variable where it is the age of the house; current year - model year
+
+'''
+
+
+class House:
+    def __init__(self, year=0, price=0, location=0, value=0):
+        self.year = year
+        self.price = price
+        self.location = location
+        self.value = value
+
+
+    def current_value(self):
+        self.cur_val = self.price * ((1 + .08) ** self.year) 
+        return self.cur_val
+
+
+    def __str__(self):
+        return (self.year, self.price, self.value, self.cur_val)
+
+    def Money_earned(self):
+        pass
+
+if __name__ == '__main__':
+    while True:
+        model_year = int(input("Enter the house model year: "))
+        price = float(input("Price of the house: "))
+        current_year = int(input("Enter the current year"))
+        location = input("Enter the location of the house")
+
+        age = current_year - model_year
+
+
