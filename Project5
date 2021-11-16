@@ -2,9 +2,10 @@
 Algorithm
 create the wanted functions
 For current value just use the given formula to find the current value
-__str__ is going to take some formating but it should be easy
+__str__ is going to take some formating but it should be easy. Going to have to do the formating inside the function
 Money_earned needs to return the amount of money the user made. To do this just take the current value and subtract the price they bought it for to get the profit
 
+Main()
 Make a while True loop in the main for all of the things
 Ask for the model year, price, current year and location
 Make a new variable where it is the age of the house; current year - model year
@@ -21,15 +22,15 @@ class House:
 
 
     def current_value(self):
-        self.cur_val = self.price * ((1 + .08) ** self.year) 
-        return self.cur_val
+        self.value = self.price * ((1 + .08) ** self.year) 
+        return self.value
 
 
     def __str__(self):
-        return (self.year, self.price, self.value, self.cur_val)
+        return print(self.year, self.price, self.value, self.value)
 
     def Money_earned(self):
-        pass
+        return (self.value - self.price)
 
 if __name__ == '__main__':
     while True:
@@ -39,5 +40,15 @@ if __name__ == '__main__':
         location = input("Enter the location of the house")
 
         age = current_year - model_year
+        
+
+        house = House(age, price, location)
+        value = house.current_value()
+        house = House(age, price, location, value)
+        earned = house.Money_earned() 
+        print(house)
+        uinput = input("Look up another house? Y N")
+        
+
 
 
