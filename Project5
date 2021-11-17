@@ -31,39 +31,43 @@ class House:
 
     def Money_earned(self):
         return (self.value - self.price)
+    
+
 
 if __name__ == '__main__':
-    while True:
-        try:
-            model_year = int(input("Enter the house model year: "))
-            while model_year <= 0:
-                print("Enter a valid year")
+    uinput = 'Y'
+    while uinput == 'Y':
+        while True:
+            try:
                 model_year = int(input("Enter the house model year: "))
-        except ValueError:
-            pass
-        try:
-            price = float(input("Price of the house: "))
-            while price <= 0:
-                print("Enter a valid price")
+                if model_year <= 0:
+                    print("Enter a valid year")
+                    continue
+                else:
+                    break
+            except ValueError:
+                continue
+        while True:
+            try:
                 price = float(input("Price of the house: "))
-                break
-        except ValueError:
-            price = float(input("Price of the house: "))
-            while price <= 0:
-                print("Enter a valid price")
-                price = float(input("Price of the house: "))
+                if price <= 0:
+                    print("Enter a valid price")
+                    continue
+                else:
+                    break
+            except ValueError:
                 continue
 
-
-        try:
-            current_year = int(input("Enter the current year: "))
-            while current_year != 2021:
-                print("Please enter the actual current year")
+        while True:
+            try:
                 current_year = int(input("Enter the current year: "))
-        except ValueError:
-                 while current_year != 2021:
+                if current_year != 2021:
                     print("Please enter the actual current year")
-                    current_year = int(input("Enter the current year: "))
+                    continue
+                else:
+                    break
+            except ValueError:
+                    continue
 
         location = input("Enter the location of the house: ")
 
