@@ -1,4 +1,7 @@
 '''
+Willem Battey
+wlbqx8@umsystem.edu
+
 Create class clock
 within the clock class define the variables hour, minute and seconds
 __str__ make it output the class like a digital class would look 00:00:00
@@ -8,39 +11,94 @@ Use the sleep function to make it print every second
 '''
 import time
 class Clock:
-    def __init__(self, hours, minutes, seconds):
+    def __init__(self, hours, minutes, seconds, clock_type):
         self.hours = hours
         self.minutes = minutes
         self.seconds = seconds
+        self.clock_type = clock_type
+        self.ampm = 'am'
     
 
     def __str__(self):
-        return ("{}:{}:{}".format(self.hours, self.minutes, self.seconds))
+        if self.clock_type == 1:
+            return ("{:02d}:{:02d}:{:02d}".format(self.hours, self.minutes, self.seconds))
+        elif self.clock_type == 0:
+            return ("{:02d}:{:02d}:{:02d} {}".format(self.hours, self.minutes, self.seconds, self.ampm))
     
 
     def tick(self):
-        while True:
-            time.sleep(1)
-            print(clock)
-            self.seconds += 1
-            if self.seconds == 60:
-                self.seconds = 00
-                self.minutes += 1
-            if self.minutes == 60:
-                self.minutes = 00
-                self.hours += 1
-            if self.hours == 24 and self.minutes == 59 and self.seconds == 60:
-                self.hours == 00
-                self.minutes == 00
-                self.seconds == 00
+        if clock_type == 1:
+            while True:
+                time.sleep(1)
+                print(clock)
+                self.seconds += 1
+                if self.seconds == 60:
+                    self.seconds = 00
+                    self.minutes += 1
+                if self.minutes == 60:
+                    self.minutes = 00
+                    self.hours += 1
+                if self.hours == 24 and self.minutes == 59 and self.seconds == 60:
+                    self.hours == 00
+                    self.minutes == 00
+                    self.seconds == 00
+        elif clock_type == 0:
+            while True:
+                time.sleep(1)
+                print(clock)
+                self.seconds += 1
+                if self.seconds == 60:
+                    self.seconds = 00
+                    self.minutes += 1
+                if self.minutes == 60:
+                    self.minutes = 00
+                    self.hours += 1
+                if self.hours == 24 and self.minutes == 59 and self.seconds == 60:
+                    self.hours == 00
+                    self.minutes == 00
+                    self.seconds == 00
+                if self.hours > 12:
+                    self.hours -= 12
+                if self.hours >= 12:
+                    self.ampm = 'pm'
+                if self.hours < 12:
+                    self.ampm = 'am'
+                    
+
 
 
 if __name__ == '__main__':
-    hours = int(input("Enter the current hour"))
-    minutes = int(input("Enter the current minute"))
-    seconds = int(input("Enter the current second"))
+    while True:
+        try:
+            hours = int(input("Enter the current hour: "))
+            break
+        except ValueError:
+            print("Please enter a valid hour")
+            continue
+    while True:
+        try: 
+            minutes = int(input("Enter the current minute: "))
+            break
+        except ValueError:
+            print("Please enter a valid minute")
+            continue
+    while True:
+        try:
+            seconds = int(input("Enter the current second: "))
+            break
+        except ValueError:
+            print("Please enter a valid second")
+            continue
 
-    clock = Clock(hours, minutes, seconds)
+    clock_type = input("Enter clock type (12 or 24): ")
+    while clock_type not in ('12', '24'):
+        print("Not an option")
+        clock_type = input("Enter clock type (12 or 24): ")
+    if clock_type == '12':      
+        clock_type = 0
+    elif clock_type == '24':
+        clock_type = 1
+    clock = Clock(hours, minutes, seconds, clock_type)
     print(clock.tick())
         
         
