@@ -1,0 +1,46 @@
+'''
+Create class clock
+within the clock class define the variables hour, minute and seconds
+__str__ make it output the class like a digital class would look 00:00:00
+tick() method: When called will increment the seconds and then affecting the minutes and hours. Easiest way would be a while True loop and just keeping adding one
+    to the seconds. For the minutes and hours to change create an if statement? might not be that simple. 
+Use the sleep function to make it print every second
+'''
+import time
+class Clock:
+    def __init__(self, hours, minutes, seconds):
+        self.hours = hours
+        self.minutes = minutes
+        self.seconds = seconds
+    
+
+    def __str__(self):
+        return ("{}:{}:{}".format(self.hours, self.minutes, self.seconds))
+    
+
+    def tick(self):
+        while True:
+            time.sleep(1)
+            print(clock)
+            self.seconds += 1
+            if self.seconds == 60:
+                self.seconds = 00
+                self.minutes += 1
+            if self.minutes == 60:
+                self.minutes = 00
+                self.hours += 1
+            if self.hours == 24 and self.minutes == 59 and self.seconds == 60:
+                self.hours == 00
+                self.minutes == 00
+                self.seconds == 00
+
+
+if __name__ == '__main__':
+    hours = int(input("Enter the current hour"))
+    minutes = int(input("Enter the current minute"))
+    seconds = int(input("Enter the current second"))
+
+    clock = Clock(hours, minutes, seconds)
+    print(clock.tick())
+        
+        
