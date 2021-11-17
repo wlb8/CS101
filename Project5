@@ -34,18 +34,37 @@ class House:
 
 if __name__ == '__main__':
     while True:
-        model_year = int(input("Enter the house model year: "))
-        while model_year <= 0:
-            print("Enter a valid year")
+        try:
             model_year = int(input("Enter the house model year: "))
-        
-        price = float(input("Price of the house: "))
-        while price <= 0:
-            print("Enter a valid price")
+            while model_year <= 0:
+                print("Enter a valid year")
+                model_year = int(input("Enter the house model year: "))
+        except ValueError:
+            pass
+        try:
             price = float(input("Price of the house: "))
-        
-        current_year = int(input("Enter the current year: "))
-        
+            while price <= 0:
+                print("Enter a valid price")
+                price = float(input("Price of the house: "))
+                break
+        except ValueError:
+            price = float(input("Price of the house: "))
+            while price <= 0:
+                print("Enter a valid price")
+                price = float(input("Price of the house: "))
+                continue
+
+
+        try:
+            current_year = int(input("Enter the current year: "))
+            while current_year != 2021:
+                print("Please enter the actual current year")
+                current_year = int(input("Enter the current year: "))
+        except ValueError:
+                 while current_year != 2021:
+                    print("Please enter the actual current year")
+                    current_year = int(input("Enter the current year: "))
+
         location = input("Enter the location of the house: ")
 
         age = current_year - model_year
