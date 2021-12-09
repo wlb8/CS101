@@ -1,0 +1,21 @@
+import unittest
+import math 
+import statistics
+
+def total(values):
+    total = sum(values)
+    return total
+
+def average(values):
+    total = sum(values)
+    if len(values) == 0:
+        return math.nan
+    else:
+        avg = total / len(values)
+        return avg
+
+def medi(values):
+    if len(values) == 0:
+        raise ValueError
+    med = statistics.median(values)
+    return med
