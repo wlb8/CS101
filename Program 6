@@ -1,0 +1,71 @@
+"""
+Create Store class
+Have a setter for location and store
+I'm gonna have inventory not in any of the classes since I don't really need to change it. I just need to print is out
+When getting inputs for the users order as for the input and set a variable to the input
+Then just put that variable into one of the setters kinda like C++
+
+"""
+
+
+
+
+
+class Store:
+    def __init__(self, location='2', store='1', inventory = None):
+        self.location = location
+        self.store = store
+        self.inventory = inventory
+        
+
+    def set_location(self, x):
+        self.location = x
+
+
+    def set_store(self, x):
+        self.store = x
+
+
+    def display(self):
+        return print("Order set. Pick up location:", self.store, self.location)
+
+
+class Cart(Store):
+    
+    def __init__(self, product=None, quantity=0, cart_dic=, recipt):
+        self.product = product
+        self.quantity = quantity
+        self.cart_dic = cart_dic
+        self.recipt = recipt
+
+
+    def add_item(self, new_item, quant):
+        self.quantity = quant
+        self.product = new_item
+        self.cart_dic[self.product] = self.quantity
+
+    
+    def remove_item(self, rem_item, quant):
+        self.quantity = quant
+        self.product = rem_item
+        self.cart_dic.pop(self.product, quant)
+
+
+
+if __name__ == '__main__':
+ 
+   invetory = {
+    'Milk':   2.50,
+    'Bread':  1.98,
+    'Egg':    0.70, 
+    'Flour':  1.18, 
+    'Oil':    4.00, 
+    'Cheese': 2.68
+   } 
+   shopping_cart = {} 
+   shopping_cart.pop()
+   H = Store() 
+   cart = Cart()
+   H.set_store('H')
+   H.set_location('D')
+   H.display()
